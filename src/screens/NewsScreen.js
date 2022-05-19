@@ -11,9 +11,9 @@ import Carousel from 'react-native-snap-carousel';
 import SingleNews from '../components/SingleNews';
 
 const NewsScreen = () => {
-  let {news} = useContext(NewsContext);
+  let {news, darkTheme} = useContext(NewsContext);
 
-  console.log('news here ', news);
+  // console.log('news here ', news);
 
   const [activeIndex, setActiveIndex] = useState();
 
@@ -23,7 +23,6 @@ const NewsScreen = () => {
 
   return (
     <View style={styles.carousal}>
-      <Text> All News </Text>
       {news?.articles ? (
         <Carousel
           firstItem={news.articles.slice(0, 10).length - 1}
@@ -33,12 +32,24 @@ const NewsScreen = () => {
           itemHeight={windowHeight}
           vertical={true}
           renderItem={({item, index}) => (
-            <SingleNews item={item} index={index} />
+            <SingleNews item={item} index={index} darkTheme={darkTheme} />
           )}
           onSnapToItem={index => setActiveIndex(index)}
         />
       ) : (
-        <></>
+        <>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: darkTheme ? '#282C35' : 'white',
+            }}>
+            <Text style={{fontSize: 12, color: darkTheme ? 'white' : 'black'}}>
+              There is no article here
+            </Text>
+          </View>
+        </>
       )}
     </View>
   );

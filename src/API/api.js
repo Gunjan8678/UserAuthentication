@@ -85,10 +85,11 @@ export const sources = [
 export const BASE_URL = 'https://saurav.tech/NewsAPI/';
 
 export const getNewsAPI = (category, country = 'in') => {
-  console.log('country here', category, country);
+  // console.log('country here', category, country);
   return `${BASE_URL}top-headlines/category/${category}/${country}.json`;
 };
 
-export const getSourceAPI = source => {
-  return `${BASE_URL}/everything/${source}.json`;
+export const getSourceAPI = (source = 'cnn') => {
+  console.log('source here ', source);
+  return `${BASE_URL}everything/${source}.json`;
 };

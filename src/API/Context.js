@@ -12,20 +12,25 @@ const Context = ({children}) => {
   const [darkTheme, setDarkTheme] = useState(true);
 
   const fetchNews = async (reset = category) => {
-    console.log('okk', getNewsAPI(reset));
+    // console.log('okk', getNewsAPI(reset));
     const response = await fetch(getNewsAPI(reset));
-    const data = await response.json();
-    console.log('data', data);
+    const data = await response.json(); // <-- error solved: here data will not be written in flower braces as they are not predefined in the api
+    // console.log('data', data);
     setNews(data);
     setIndex(1);
   };
   const fetchNewsfromSources = async () => {
+    console.log('source API ', getSourceAPI(source));
     try {
       const response = await fetch(getSourceAPI(source));
-      const {data} = await response.json();
+      const data = await response.json();
+      // console.log('source api  here ', data);
+      // const {data} = await response.json(); <-- error solved: here data will not be written in flower braces as they are not predefined in the api
       setNews(data);
       setIndex(1);
+      console.log('source news api      here ', news);
     } catch (e) {
+      console.log('inside fetchNews from Sources');
       console.log('error', e);
     }
   };
@@ -33,9 +38,9 @@ const Context = ({children}) => {
   useEffect(() => {
     fetchNews();
   }, [category]);
-  // useEffect(() => {
-  //   fetchNewsfromSources();
-  // }, [source]);
+  useEffect(() => {
+    fetchNewsfromSources();
+  }, [source]);
 
   return (
     <NewsContext.Provider
@@ -45,8 +50,8 @@ const Context = ({children}) => {
         setIndex,
         setSource,
         setCategory,
-        // darkTheme,
-        // setDarkTheme,
+        darkTheme,
+        setDarkTheme,
         fetchNews,
       }}>
       {children}
